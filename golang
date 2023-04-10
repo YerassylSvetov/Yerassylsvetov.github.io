@@ -1,0 +1,41 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func main() {
+	s1 := "listen"
+	s2 := "silent"
+	if areAnagrams(s1, s2) {
+		fmt.Println(s1, "and", s2, "are anagrams of each other")
+	} else {
+		fmt.Println(s1, "and", s2, "are not anagrams of each other")
+	}
+}
+
+func areAnagrams(s1 string, s2 string) bool {
+	// First, check if the length of the two strings is the same
+	if len(s1) != len(s2) {
+		return false
+	}
+
+	// Convert the strings to slices of runes for sorting
+	s1_slice := []rune(s1)
+	s2_slice := []rune(s2)
+
+	// Sort the slices of runes, which now also sorts the strings
+	sort.Slice(s1_slice, func(i, j int) bool { return s1_slice[i] < s1_slice[j] })
+	sort.Slice(s2_slice, func(i, j int) bool { return s2_slice[i] < s2_slice[j] })
+
+	// Loop over the sorted slices and compare each rune
+	for i := 0; i < len(s1); i++ {
+		if s1_slice[i] != s2_slice[i] {
+			return false
+		}
+	}
+
+	// If all the runes match, return true
+	return true
+}
